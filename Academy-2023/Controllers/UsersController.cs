@@ -10,7 +10,7 @@ namespace Academy_2023.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private UserRepository _userRepository;
+        private readonly UserRepository _userRepository;
 
         public UsersController()
         {
@@ -37,7 +37,7 @@ namespace Academy_2023.Controllers
         [HttpPost]
         public ActionResult Post([FromBody] User data)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }

@@ -4,57 +4,53 @@ namespace Academy_2023.Repositories
 {
     public class UserRepository
     {
-        public static List<User> Users = new List<User>();
+        private readonly ApplicationDbContext _context = new ApplicationDbContext();
 
         public IEnumerable<User> GetAll()
         {
-            return Users;
+            return _context.Users.ToList();
         }
 
         public User? GetById(int id)
         {
-            foreach (var user in Users)
-            {
-                if (user.Id == id)
-                {
-                    return user;
-                }
-            }
-
-            return null;
+            return _context.Users.FirstOrDefault(x => x.Id == id);
         }
 
         public void Create(User data)
         {
-            Users.Add(data);
+            _context.Users.Add(data);
+
+            _context.SaveChanges();
         }
 
         public User? Update(int id, User data)
         {
-            foreach (var user in Users)
-            {
-                if (user.Id == id)
-                {
-                    user.FirstName = data.FirstName;
-                    user.LastName = data.LastName;
+            var user = _context.Users.FirstOrDefault(x => x.Id == id);
 
-                    return user;
-                }
+            if (user != null)
+            {
+                user.Email = data.Email;
+                user.Password = data.Password;
+                user.FirstName = data.FirstName;
+                user.LastName = data.LastName;
+
+                _context.SaveChanges();
             }
 
-            return null;
+            return user;
         }
 
         public bool Delete(int id)
         {
-            foreach (var user in Users)
-            {
-                if (user.Id == id)
-                {
-                    Users.Remove(user);
+            var user = _context.Users.FirstOrDefault(x => x.Id == id);
 
-                    return true;
-                }
+            if (user != null)
+            {
+                _context.Users.Remove(user);
+
+                _context.SaveChanges();
+
+                return true;
             }
 
             return false;
