@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Academy_2023.Data
+namespace Academy_2023.Dto
 {
-    public class User
+    public class UserDto
     {
         [Required]
         public int? Id { get; set; }
@@ -14,7 +14,5 @@ namespace Academy_2023.Data
         [StringLength(10)]
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
-
-        public ICollection<Course> Courses { get; set; } = new HashSet<Course>();     // navigation property
     }
 }
