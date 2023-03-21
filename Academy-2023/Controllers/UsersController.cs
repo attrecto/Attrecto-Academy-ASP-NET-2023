@@ -1,6 +1,7 @@
 ﻿using Academy_2023.Dto;
 using Academy_2023.Helpers;
 using Academy_2023.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
@@ -10,6 +11,7 @@ namespace Academy_2023.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;

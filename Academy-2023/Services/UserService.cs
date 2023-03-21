@@ -54,6 +54,11 @@ namespace Academy_2023.Services
             return _userRepository.Delete(id);
         }
 
+        public Task<User?> GetByEmailAsync(string email)
+        {
+            return _userRepository.GetByEmailAsync(email);
+        }
+
         private UserDto MapToDto(User user) => new UserDto { Id = user.Id, Email = user.Email, Password = user.Password, FirstName = user.FirstName, LastName = user.LastName };
 
         private User MapToEntity(UserDto userDto) => new User { Id = userDto.Id, Email = userDto.Email, Password = userDto.Password, FirstName = userDto.FirstName, LastName = userDto.LastName };

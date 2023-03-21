@@ -1,4 +1,5 @@
 ﻿using Academy_2023.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Academy_2023.Repositories
 {
@@ -47,6 +48,11 @@ namespace Academy_2023.Repositories
             }
 
             return false;
+        }
+
+        public Task<User?> GetByEmailAsync(string email)
+        {
+            return _context.Users.SingleOrDefaultAsync(u => u.Email == email);
         }
     }
 }

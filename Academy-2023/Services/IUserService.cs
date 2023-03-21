@@ -10,5 +10,6 @@ namespace Academy_2023.Services
         IEnumerable<UserDto> GetAll();
         UserDto? GetById(int id);
         User? Update(int id, UserDto userDto);
+        Task<User?> GetByEmailAsync(string email);
     }
 }

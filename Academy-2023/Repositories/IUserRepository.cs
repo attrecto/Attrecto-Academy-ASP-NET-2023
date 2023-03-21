@@ -9,5 +9,6 @@ namespace Academy_2023.Repositories
         IEnumerable<User> GetAll();
         User? GetById(int id);
         void Update();
+        Task<User?> GetByEmailAsync(string email);
     }
 }
