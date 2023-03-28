@@ -13,35 +13,40 @@ namespace Academy_2023.Services
             _userRepository = userRepository;
         }
 
-        public IEnumerable<UserDto> GetAll()
+        public IEnumerable<UserListDto> GetAll()
         {
             var users = _userRepository.GetAll();
 
-            return users.Select(MapToDto);
+            return users.Select(MapToListDto);
         }
 
-        public UserDto? GetById(int id)
+        public UserListDto? GetById(int id)
         {
             var user = _userRepository.GetById(id);
 
-            return user == null ? null : MapToDto(user);
+            return user == null ? null : MapToListDto(user);
         }
 
-        public void Create(UserDto userDto)
+        public void Create(CreateUserDto userDto)
         {
-            _userRepository.Create(MapToEntity(userDto));
+            var newUser = MapToEntity(userDto);
+            newUser.CreatedAt = DateTime.Now;
+            newUser.Role = Role.User.ToString();
+
+            _userRepository.Create(newUser);
         }
 
-        public User? Update(int id, UserDto userDto)
+        public User? Update(int id, CreateUserDto userDto)
         {
             var user = _userRepository.GetById(id);
 
             if (user != null)
             {
-                user.Email = userDto.Email;
+                user.Email = userDto.Name;
                 user.Password = userDto.Password;
                 user.FirstName = userDto.FirstName;
                 user.LastName = userDto.LastName;
+                user.ImageUrl = userDto.Image;
 
                 _userRepository.Update();
             }
@@ -59,8 +64,8 @@ namespace Academy_2023.Services
             return _userRepository.GetByEmailAsync(email);
         }
 
-        private UserDto MapToDto(User user) => new UserDto { Id = user.Id, Email = user.Email, Password = user.Password, FirstName = user.FirstName, LastName = user.LastName };
+        private UserListDto MapToListDto(User user) => new UserListDto { Id = user.Id, Name = user.Email, Image = user.ImageUrl };
 
-        private User MapToEntity(UserDto userDto) => new User { Id = userDto.Id, Email = userDto.Email, Password = userDto.Password, FirstName = userDto.FirstName, LastName = userDto.LastName };
+        private User MapToEntity(CreateUserDto userDto) => new User { Email = userDto.Name, Password = userDto.Password, FirstName = userDto.FirstName, LastName = userDto.LastName, ImageUrl = userDto.Image };
     }
 }

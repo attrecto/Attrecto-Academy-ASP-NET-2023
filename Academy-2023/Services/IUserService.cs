@@ -5,11 +5,11 @@ namespace Academy_2023.Services
 {
     public interface IUserService
     {
-        void Create(UserDto userDto);
+        void Create(CreateUserDto userDto);
         bool Delete(int id);
-        IEnumerable<UserDto> GetAll();
-        UserDto? GetById(int id);
-        User? Update(int id, UserDto userDto);
+        IEnumerable<UserListDto> GetAll();
+        UserListDto? GetById(int id);
+        User? Update(int id, CreateUserDto userDto);
         Task<User?> GetByEmailAsync(string email);
     }
 }

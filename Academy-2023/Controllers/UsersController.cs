@@ -25,14 +25,15 @@ namespace Academy_2023.Controllers
 
         // GET: api/<UsersController>
         [HttpGet]
-        public IEnumerable<UserDto> Get()
+        [Authorize(Policy = "AdminOnlyPolicy")]
+        public IEnumerable<UserListDto> Get()
         {
             return _userService.GetAll();
         }
 
         // GET api/<UsersController>/5
         [HttpGet("{id}")]
-        public ActionResult<UserDto> Get(int id)
+        public ActionResult<UserListDto> Get(int id)
         {
             var user = _userService.GetById(id);
 
@@ -41,7 +42,8 @@ namespace Academy_2023.Controllers
 
         // POST api/<UsersController>
         [HttpPost]
-        public ActionResult Post([FromBody] UserDto data)
+        [AllowAnonymous]
+        public ActionResult Post([FromBody] CreateUserDto data)
         {
             if (!ModelState.IsValid)
             {
@@ -55,7 +57,7 @@ namespace Academy_2023.Controllers
 
         // PUT api/<UsersController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] UserDto data)
+        public ActionResult Put(int id, [FromBody] CreateUserDto data)
         {
             var user = _userService.Update(id, data);
 
